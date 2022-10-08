@@ -23,7 +23,7 @@ class CreateProcessosTable extends Migration
             $table->foreignId('id_pessoa')->constrained('pessoas')->onDelete('cascade');
             $table->foreignId('id_usuario')->constrained('users')->onDelete('cascade');
             $table->timestamps();
-            $table->unique('numero', 'id_pessoa', 'id_usuario');
+            $table->unique(['numero', 'id_pessoa', 'id_usuario']);
         });
     }
 

@@ -24,7 +24,7 @@ class CreatePessoasTable extends Migration
             $table->string("telefone");
             $table->foreignId('id_usuario')->constrained('users')->onDelete('cascade');
             $table->timestamps();
-            $table->unique('cpf', 'id_usuario');
+            $table->unique(['cpf', 'id_usuario']);
         });
     }
 
