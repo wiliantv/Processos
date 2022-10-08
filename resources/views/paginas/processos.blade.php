@@ -1,5 +1,5 @@
 @extends("layouts.default")
-@section('title', 'Dashboard ')
+@section('title', 'Lista Pessoas')
 @section('content')
 <div id="layoutSidenav_content">
     <main>
@@ -10,8 +10,6 @@
             </ol>
             <div class="card mb-4">
                 <div class="card-header">
-
-
                     <i class="fas fa-table me-1"></i>
                     Processos
                 </div>
@@ -20,30 +18,30 @@
                     <table id="datatablesSimple">
                         <thead>
                             <tr>
-                                <th>Nº Proc</th>
-                                <th>Nome</th>
+                                <th>Numero</th>
+                                <th>Classe</th>
                                 <th>Andamento</th>
-                                <th>Data Audiencia</th>
-                                <th>Prasos</th>
+                                <th>Audiencia</th>
+                                <th>Valor</th>
                             </tr>
                         </thead>
                         <tfoot>
                             <tr>
-                                <th>Nº Proc</th>
-                                <th>Nome</th>
+                                <th>Numero</th>
+                                <th>Classe</th>
                                 <th>Andamento</th>
-                                <th>Data Audiencia</th>
-                                <th>Prasos</th>
+                                <th>Audiencia</th>
+                                <th>Valor</th>
                             </tr>
                         </tfoot>
                         <tbody>
                             @foreach ($processos as $processo)
                             <tr>
                                 <td>{{ $processo->numero }}</td>
-                                <td>{{ $processo->nome }}</td>
+                                <td>{{ $processo->classe }}</td>
                                 <td>{{ $processo->andamento }}</td>
                                 <td>{{ $processo->audiencia }}</td>
-                                <td>{{ $processo->data }}</td>
+                                <td>{{ $processo->valor }}</td>
                                 @include("components.utils.processos_actions")
                             </tr>
                             @endforeach

@@ -1,5 +1,5 @@
 @extends("layouts.default")
-@section('title', 'Dashboard ')
+@section('title', 'Cadastro Pessoas ')
 @section('content')
 
 <div id="layoutSidenav_content">
@@ -15,9 +15,9 @@
                     Pessoas
                 </div>
 
-                <div class="card-body">
+                <div class="card-body">name
 
-                    <form class="row g-3" method="POST" action="{{ route("pessoa") }}">
+                    <form class="row g-3" method="POST" action="{{ route("pessoas.store") }}">
                         @csrf
                         <div class="col-md-6">
                           <label for="nome" class="form-label">Nome</label>

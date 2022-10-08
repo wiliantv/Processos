@@ -15,15 +15,16 @@ class CreatePessoasTable extends Migration
     {
         Schema::create('pessoas', function (Blueprint $table) {
             $table->id();
-            $table->string("cpf")->unique();
+            $table->string("cpf");
             $table->string("nome");
             $table->string("rg")->nullable();
             $table->string("estado_civil")->nullable();
             $table->string("endereco")->type("TEXT");
             $table->string("profissao")->nullable();
             $table->string("telefone");
-            $table->integer("id_usuario")->references('id')->on("users");
+            $table->foreignId('id_usuario')->constrained('users')->onDelete('cascade');
             $table->timestamps();
+            $table->unique('cpf', 'id_usuario');
         });
     }
 

@@ -12,6 +12,7 @@ const mix = require('laravel-mix');
  */
 
 mix.js('resources/js/datatables-simple-demo.js', 'public/js').version();
+mix.js('node_modules/jquery/dist/jquery.js', 'public/js').version();
 mix.js('resources/js/scripts.js', 'public/js')
     .postCss('resources/css/styles.css', 'public/css', [
         //

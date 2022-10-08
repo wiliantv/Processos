@@ -2,48 +2,46 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\pessoa;
+use App\Models\Pessoa;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\PessoaRequest;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\ValidationException;
+
 
 class PessoaController extends Controller
 {
-    public function index(){
-        $pessoas = pessoa::where("id_usuario",Auth::user()->id)->orderBy("created_at")->get();
-        return view('paginas.pessoas', ["pessoas" => $pessoas]);
+    public function index()
+    {
+        return view("paginas.pessoas", ["pessoas" => Pessoa::getByUser(Auth::user()->id)]);
     }
-    public function store(Request $request){
-        $request->validate([
-            'nome' => ['required', 'string', 'min:5'],
-            'cpf' => ['required'],
-        ]);
-        $cpf = str_replace(".", "", $request->cpf);
-        $cpf = str_replace("-", "", $cpf);
-        $usr = pessoa::where("cpf", $cpf )->get();
-        //dd(count($usr));
-        if(count($usr) >= 1){
-            throw ValidationException::withMessages([
-                'cpf' => "Já existe uma pessoa com este mesmo cpf",
-            ]);
-        }
-        $pessoa = new pessoa();
-        $pessoa->cpf = $cpf;
-        $pessoa->nome = $request->nome;
-        $pessoa->endereco = $request->endereco;
-        $pessoa->telefone = $request->telefone;
-        $pessoa->rg = $request->rg;
-        $pessoa->estado_civil = $request->estado_civil;
-        $pessoa->profissao = $request->profissao;
-        $pessoa->id_usuario = Auth::user()->id;
-
-        $pessoa->save();
-        //$request->session()->put('auth.password_confirmed_at', time());
-
-        return redirect()->route('pessoas');
-
+    public function show()
+    {
+        //...
     }
-    // public function index(){
-
-    // }
+    public function update()
+    {
+        //...
+    }
+    public function create()
+    {
+        return view("paginas.create.pessoa");
+    }
+    public function edit()
+    {
+        //...
+    }
+    public function store(PessoaRequest $request)
+    {
+        Pessoa::fromRequest($request)->save();
+        return redirect()
+            ->route('pessoas.index')
+            ->with(["notify-succes" => "Usuario Criado"]);
+    }
+    public function destroy(Request $request)
+    {
+        Pessoa::deleteFromID($request->id);
+        return redirect()
+            ->back();
+    }
 }

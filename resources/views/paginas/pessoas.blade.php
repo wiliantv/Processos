@@ -1,6 +1,7 @@
-@extends("layouts.default")
+@extends('layouts.default')
 @section('title', 'Lista Pessoas')
 @section('content')
+
 <div id="layoutSidenav_content">
     <main>
         <div class="container-fluid px-4">
@@ -14,6 +15,7 @@
                     Pessoas
                 </div>
                 <div class="card-body">
+                    @if ($pessoas)
                     <table id="datatablesSimple">
                         <thead>
                             <tr>
@@ -21,7 +23,6 @@
                                 <th>Nome</th>
                                 <th>Endereco</th>
                                 <th>Telefone</th>
-                                <th></th>
                             </tr>
                         </thead>
                         <tfoot>
@@ -30,29 +31,37 @@
                                 <th>Nome</th>
                                 <th>Endereco</th>
                                 <th>Telefone</th>
-                                <th></th>
                             </tr>
                         </tfoot>
                         <tbody>
-                            @forelse ($pessoas as $proc)
+                            @foreach ($pessoas as $pessoa)
                             <tr>
-                                <td>{{ $proc->cpf }}</td>
-                                <td>{{ $proc->nome }}</td>
-                                <td>{{ $proc->endereco }}</td>
-                                <td>{{ $proc->telefone }}</td>
-                                <td style="text-align: center; padding-left: 10px" scope="row">
-                                    <a href=""><i class="fas fa-trash" style="color: red"></i></a>
-                                    <a href=""><i class="fas fa-pen-to-square"></i></a>
+                                <td>{{ $pessoa->cpf }}</td>
+                                <td>{{ $pessoa->nome }}</td>
+                                <td>{{ $pessoa->endereco }}</td>
+                                <td>{{ $pessoa->telefone }}</td>
+                                <td>
+                                    <a data-bs-toggle="modal" data-bs-target="#delete_pessoa" data-bs-id="{{ $pessoa->id }}"
+                                        data-bs-name="{{ $pessoa->nome }}">
+                                        <i class="fas fa-trash" style="color: red"></i>
+                                    </a>
+                                    {{-- <a href="{{ route("pessoas.destroy", $pessoa->id) }}"><i class="fas fa-trash" style="color: red"></i></a> --}}
                                 </td>
+                                {{-- <td style="text-align: center; padding-left: 10px" scope="row">
+                                    <a href=""><i class="fas fa-pen-to-square"></i></a>
+                                </td> --}}
                             </tr>
-                            @empty
-
-                            @endforelse
+                            @endforeach
                         </tbody>
                     </table>
+                    @include("components.modals.destroy.pessoas")
+                    @else
+                    <h3>Não existem pessoas cadastradas</h3>
+                    @endif
                 </div>
             </div>
         </div>
     </main>
 </div>
+
 @endsection
